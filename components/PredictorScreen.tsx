@@ -81,17 +81,22 @@ const ThimbleGame = React.memo((props: {
     // 0: Left, 1: Center, 2: Right
     const [positions, setPositions] = useState([0, 1, 2]); 
     const [spacing, setSpacing] = useState(125); // Default to increased mobile spacing
+    const [diamondOffset, setDiamondOffset] = useState(112); // Default mobile offset
     const shuffleIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
     const THIMBLE_IMAGE = "https://i.postimg.cc/TYCYZxV0/Untitled-design-(4).png";
 
-    // Responsive spacing to prevent clipping
+    // Responsive spacing and diamond positioning
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth >= 768) {
-                setSpacing(260); // Desktop spacing increased for larger images
+                setSpacing(260); // Desktop spacing
+                // Desktop: 480px height / 2 = 240px. Diamond height 32px / 2 = 16px. 240 - 16 = 224px.
+                setDiamondOffset(224); 
             } else {
-                setSpacing(125); // Mobile spacing increased to separate images
+                setSpacing(125); // Mobile spacing
+                // Mobile: 256px height / 2 = 128px. Diamond height 32px / 2 = 16px. 128 - 16 = 112px.
+                setDiamondOffset(112);
             }
         };
         
@@ -160,11 +165,11 @@ const ThimbleGame = React.memo((props: {
                 </div>
             </header>
 
-            <main className="flex-grow flex flex-col items-center justify-center w-full max-w-xl mx-auto px-4 z-10 relative pb-20">
+            <main className="flex-grow flex flex-col items-center w-full max-w-xl mx-auto px-4 z-10 relative pt-10 md:pt-16 pb-10">
                 
                 {/* Result Display Container */}
                 <div 
-                    className={`mb-8 w-64 h-24 rounded-3xl bg-gradient-to-b from-[#fcd34d] to-[#fbbf24] shadow-[inset_0_2px_4px_rgba(255,255,255,0.6),0_8px_16px_rgba(180,83,9,0.3)] border-4 border-[#fef3c7]/50 flex items-center justify-center relative transition-opacity duration-500 ${props.gameState === 'revealed' ? 'opacity-100' : 'opacity-0'}`}
+                    className={`mb-14 md:mb-20 w-64 h-24 rounded-3xl bg-gradient-to-b from-[#fcd34d] to-[#fbbf24] shadow-[inset_0_2px_4px_rgba(255,255,255,0.6),0_8px_16px_rgba(180,83,9,0.3)] border-4 border-[#fef3c7]/50 flex items-center justify-center relative transition-opacity duration-500 ${props.gameState === 'revealed' ? 'opacity-100' : 'opacity-0'}`}
                 >
                     <div className="absolute inset-0 rounded-3xl bg-white/10 pointer-events-none"></div>
                     {props.gameState === 'revealed' && (
@@ -175,16 +180,16 @@ const ThimbleGame = React.memo((props: {
                 </div>
 
                 {/* Game Area */}
-                <div className="relative w-full h-[480px] flex items-center justify-center -mb-32 md:mb-10">
+                <div className="relative w-full h-64 md:h-[30rem] flex items-center justify-center mb-14 md:mb-20">
                      {/* Diamond Container - Absolute centered */}
                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full pointer-events-none">
                         {props.resultPosition !== null && (
                             <div 
                                 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300"
                                 style={{ 
-                                    // Spacing matches the responsive thimble spacing
-                                    // Moved diamond down to 80px to align with larger thimbles
-                                    transform: `translate(calc(-50% + ${(props.resultPosition - 1) * spacing}px), 80px)`,
+                                    // Calculate offset to ensure diamond sits exactly at base of thimble
+                                    // Mobile: 128px (half thimble) - 16px (half diamond) = 112px
+                                    transform: `translate(calc(-50% + ${(props.resultPosition - 1) * spacing}px), ${diamondOffset}px)`,
                                     opacity: props.gameState === 'revealed' ? 1 : 0
                                 }}
                             >
@@ -194,7 +199,7 @@ const ThimbleGame = React.memo((props: {
                      </div>
 
                      {/* Thimbles Container */}
-                     <div className="relative w-full h-[480px] flex items-center justify-center">
+                     <div className="relative w-full h-full flex items-center justify-center">
                         {[0, 1, 2].map((id) => {
                             const currentSlot = positions[id];
                             const isWinner = props.gameState === 'revealed' && currentSlot === props.resultPosition;
