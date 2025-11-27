@@ -83,7 +83,7 @@ const ThimbleGame = React.memo((props: {
     const [positions, setPositions] = useState([0, 1, 2]); 
     const shuffleIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-    const THIMBLE_IMAGE = "https://i.postimg.cc/7YqkHzBM/Untitled-design-(1).jpg";
+    const THIMBLE_IMAGE = "https://i.postimg.cc/TYCYZxV0/Untitled-design-(4).png";
 
     useEffect(() => {
         if (props.gameState === 'shuffling') {
