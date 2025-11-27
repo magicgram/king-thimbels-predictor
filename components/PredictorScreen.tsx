@@ -177,7 +177,7 @@ const ThimbleGame = React.memo((props: {
                 
                 {/* Result Display Container */}
                 <div 
-                    className={`mb-5 md:mb-10 w-52 h-16 rounded-3xl bg-gradient-to-b from-[#fcd34d] to-[#fbbf24] shadow-[inset_0_2px_4px_rgba(255,255,255,0.6),0_8px_16px_rgba(180,83,9,0.3)] border-4 border-[#fef3c7]/50 flex items-center justify-center relative transition-opacity duration-500 ${props.gameState === 'revealed' ? 'opacity-100' : 'opacity-0'}`}
+                    className={`mb-1 md:mb-8 w-52 h-16 rounded-3xl bg-gradient-to-b from-[#fcd34d] to-[#fbbf24] shadow-[inset_0_2px_4px_rgba(255,255,255,0.6),0_8px_16px_rgba(180,83,9,0.3)] border-4 border-[#fef3c7]/50 flex items-center justify-center relative transition-opacity duration-500 ${props.gameState === 'revealed' ? 'opacity-100' : 'opacity-0'}`}
                 >
                     <div className="absolute inset-0 rounded-3xl bg-white/10 pointer-events-none"></div>
                     {props.gameState === 'revealed' && (
@@ -187,8 +187,8 @@ const ThimbleGame = React.memo((props: {
                     )}
                 </div>
 
-                {/* Game Area */}
-                <div className="relative w-full h-[480px] flex items-center justify-center mb-2 md:mb-8">
+                {/* Game Area - Moved up with negative margin on mobile */}
+                <div className="relative w-full h-[480px] flex items-center justify-center mb-2 md:mb-8 -mt-16 md:mt-0">
                      {/* Diamond Container - Absolute centered */}
                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full pointer-events-none">
                         {props.resultPosition !== null && (
