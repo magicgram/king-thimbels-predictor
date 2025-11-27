@@ -240,7 +240,7 @@ const ThimbleGame = React.memo((props: {
                     onClick={props.onStart}
                     disabled={props.isLoading || props.gameState === 'shuffling'}
                     className={`
-                        relative w-52 h-16 rounded-full font-russo text-2xl tracking-wider text-white shadow-[0_6px_0_#7f1d1d,0_10px_10px_rgba(0,0,0,0.3)] transition-all overflow-hidden border-2 border-red-400/50 -mb-32 md:mb-2
+                        relative w-52 h-16 rounded-full font-russo text-2xl tracking-wider text-white shadow-[0_6px_0_#7f1d1d,0_10px_10px_rgba(0,0,0,0.3)] transition-all overflow-hidden border-2 border-red-400/50 -mt-32 md:mb-2 z-40
                         ${props.gameState === 'shuffling' || props.isLoading
                             ? 'bg-gray-500 cursor-not-allowed opacity-80 shadow-none translate-y-1' 
                             : 'bg-gradient-to-b from-[#ef4444] via-[#dc2626] to-[#b91c1c] hover:brightness-110 active:shadow-none active:translate-y-[6px]'}
