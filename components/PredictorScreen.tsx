@@ -161,7 +161,7 @@ const ThimbleGame = React.memo((props: {
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-[#fbbf24] via-[#f59e0b] to-[#b45309] z-0"></div>
             
             {/* Header */}
-            <header className="w-full flex justify-between items-center p-5 z-20">
+            <header className="w-full flex justify-between items-center p-4 z-20">
                 <div className="w-10"></div>
                 <div className="flex items-center gap-3 ml-auto">
                     <button onClick={props.onOpenGuide} className="p-2 rounded-full bg-black/10 text-[#78350f] hover:bg-black/20 transition active:scale-90">
@@ -173,22 +173,22 @@ const ThimbleGame = React.memo((props: {
                 </div>
             </header>
 
-            <main className="flex-grow flex flex-col items-center w-full max-w-xl mx-auto px-4 z-10 relative pt-10 md:pt-16 pb-10">
+            <main className="flex-grow flex flex-col items-center w-full max-w-xl mx-auto px-4 z-10 relative pt-4 md:pt-8 pb-10">
                 
                 {/* Result Display Container */}
                 <div 
-                    className={`mb-14 md:mb-20 w-64 h-24 rounded-3xl bg-gradient-to-b from-[#fcd34d] to-[#fbbf24] shadow-[inset_0_2px_4px_rgba(255,255,255,0.6),0_8px_16px_rgba(180,83,9,0.3)] border-4 border-[#fef3c7]/50 flex items-center justify-center relative transition-opacity duration-500 ${props.gameState === 'revealed' ? 'opacity-100' : 'opacity-0'}`}
+                    className={`mb-5 md:mb-10 w-52 h-16 rounded-3xl bg-gradient-to-b from-[#fcd34d] to-[#fbbf24] shadow-[inset_0_2px_4px_rgba(255,255,255,0.6),0_8px_16px_rgba(180,83,9,0.3)] border-4 border-[#fef3c7]/50 flex items-center justify-center relative transition-opacity duration-500 ${props.gameState === 'revealed' ? 'opacity-100' : 'opacity-0'}`}
                 >
                     <div className="absolute inset-0 rounded-3xl bg-white/10 pointer-events-none"></div>
                     {props.gameState === 'revealed' && (
-                        <h1 className="font-russo text-3xl md:text-4xl text-[#7f1d1d] tracking-widest drop-shadow-[0_2px_0_rgba(255,255,255,0.4)] animate-fade-in-up uppercase">
+                        <h1 className="font-russo text-2xl md:text-3xl text-[#7f1d1d] tracking-widest drop-shadow-[0_2px_0_rgba(255,255,255,0.4)] animate-fade-in-up uppercase">
                             {getResultText()}
                         </h1>
                     )}
                 </div>
 
                 {/* Game Area */}
-                <div className="relative w-full h-[480px] flex items-center justify-center mb-14 md:mb-20">
+                <div className="relative w-full h-[480px] flex items-center justify-center mb-2 md:mb-8">
                      {/* Diamond Container - Absolute centered */}
                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full pointer-events-none">
                         {props.resultPosition !== null && (
