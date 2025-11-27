@@ -111,9 +111,9 @@ const ThimbleGame = React.memo((props: {
         }
     }, [props.gameState]);
 
-    // Adjusted spacing for larger thimbles (w-32 is 128px)
+    // Adjusted spacing for larger thimbles
     const getPositionStyles = (posIndex: number) => {
-        const spacing = 130; 
+        const spacing = 150; // Increased spacing for larger thimbles
         const xOffset = (posIndex - 1) * spacing; 
         return { transform: `translateX(${xOffset}px)` };
     };
@@ -144,10 +144,10 @@ const ThimbleGame = React.memo((props: {
                 </div>
             </header>
 
-            <main className="flex-grow flex flex-col items-center justify-center w-full max-w-lg mx-auto px-4 z-10 relative pb-20">
+            <main className="flex-grow flex flex-col items-center justify-center w-full max-w-xl mx-auto px-4 z-10 relative pb-20">
                 
                 {/* Result Display Container - Styled like the reference */}
-                <div className="mb-10 w-64 h-24 rounded-3xl bg-gradient-to-b from-[#fcd34d] to-[#fbbf24] shadow-[inset_0_2px_4px_rgba(255,255,255,0.6),0_8px_16px_rgba(180,83,9,0.3)] border-4 border-[#fef3c7]/50 flex items-center justify-center relative">
+                <div className="mb-8 w-64 h-24 rounded-3xl bg-gradient-to-b from-[#fcd34d] to-[#fbbf24] shadow-[inset_0_2px_4px_rgba(255,255,255,0.6),0_8px_16px_rgba(180,83,9,0.3)] border-4 border-[#fef3c7]/50 flex items-center justify-center relative">
                     <div className="absolute inset-0 rounded-3xl bg-white/10 pointer-events-none"></div>
                     {props.gameState === 'revealed' && (
                         <h1 className="font-russo text-5xl text-[#7f1d1d] tracking-widest drop-shadow-[0_2px_0_rgba(255,255,255,0.4)] animate-fade-in-up uppercase">
@@ -161,15 +161,15 @@ const ThimbleGame = React.memo((props: {
                 </div>
 
                 {/* Game Area */}
-                <div className="relative w-full h-72 flex items-center justify-center mb-10">
+                <div className="relative w-full h-80 flex items-center justify-center mb-10">
                      {/* Diamond Container - Absolute centered */}
-                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[390px] h-full pointer-events-none">
+                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full pointer-events-none">
                         {props.resultPosition !== null && (
                             <div 
                                 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300"
                                 style={{ 
-                                    // Spacing must match the thimble spacing (130px)
-                                    transform: `translate(calc(-50% + ${(props.resultPosition - 1) * 130}px), 30px)`,
+                                    // Spacing must match the thimble spacing (150px)
+                                    transform: `translate(calc(-50% + ${(props.resultPosition - 1) * 150}px), 40px)`,
                                     opacity: props.gameState === 'revealed' ? 1 : 0
                                 }}
                             >
@@ -179,7 +179,7 @@ const ThimbleGame = React.memo((props: {
                      </div>
 
                      {/* Thimbles Container */}
-                     <div className="relative w-[390px] h-60 flex items-center justify-center">
+                     <div className="relative w-full max-w-[500px] h-80 flex items-center justify-center">
                         {[0, 1, 2].map((id) => {
                             const currentSlot = positions[id];
                             const isWinner = props.gameState === 'revealed' && currentSlot === props.resultPosition;
@@ -187,10 +187,10 @@ const ThimbleGame = React.memo((props: {
                             return (
                                 <div
                                     key={id}
-                                    className="absolute transition-transform duration-300 ease-in-out w-44 h-44 md:w-64 md:h-64 flex items-center justify-center z-20"
+                                    className="absolute transition-transform duration-300 ease-in-out w-56 h-56 md:w-80 md:h-80 flex items-center justify-center z-20"
                                     style={{
                                         ...getPositionStyles(currentSlot),
-                                        marginTop: isWinner ? '-110px' : '0px',
+                                        marginTop: isWinner ? '-140px' : '0px',
                                         zIndex: isWinner ? 30 : 20
                                     }}
                                 >
