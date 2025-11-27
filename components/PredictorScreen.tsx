@@ -168,14 +168,14 @@ const ThimbleGame = React.memo((props: {
                 >
                     <div className="absolute inset-0 rounded-3xl bg-white/10 pointer-events-none"></div>
                     {props.gameState === 'revealed' && (
-                        <h1 className="font-russo text-5xl text-[#7f1d1d] tracking-widest drop-shadow-[0_2px_0_rgba(255,255,255,0.4)] animate-fade-in-up uppercase">
+                        <h1 className="font-russo text-3xl md:text-4xl text-[#7f1d1d] tracking-widest drop-shadow-[0_2px_0_rgba(255,255,255,0.4)] animate-fade-in-up uppercase">
                             {getResultText()}
                         </h1>
                     )}
                 </div>
 
                 {/* Game Area */}
-                <div className="relative w-full h-[400px] flex items-center justify-center mb-10">
+                <div className="relative w-full h-[400px] flex items-center justify-center mb-2">
                      {/* Diamond Container - Absolute centered */}
                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full pointer-events-none">
                         {props.resultPosition !== null && (
