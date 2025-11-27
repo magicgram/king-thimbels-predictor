@@ -306,6 +306,22 @@ const PredictorScreen: React.FC<PredictorScreenProps> = ({ user, onLogout }) => 
   const [isLoading, setIsLoading] = useState(false);
   const [profilePic, setProfilePic] = useState<string | null>(null);
 
+  // Sync state changes to localStorage so refreshing preserves the accurate count
+  useEffect(() => {
+    try {
+        const savedUserStr = localStorage.getItem('session_user');
+        if (savedUserStr) {
+            const savedUser = JSON.parse(savedUserStr);
+            if (savedUser.predictionsLeft !== predictionsLeft) {
+                const updatedUser = { ...savedUser, predictionsLeft };
+                localStorage.setItem('session_user', JSON.stringify(updatedUser));
+            }
+        }
+    } catch (e) {
+        console.error("Failed to update session storage", e);
+    }
+  }, [predictionsLeft]);
+
   useEffect(() => {
     const storedPic = localStorage.getItem(`profile_pic_${user.playerId}`);
     if (storedPic) setProfilePic(storedPic);
