@@ -83,6 +83,7 @@ const ThimbleGame = React.memo((props: {
     const shuffleIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
     const THIMBLE_IMAGE = "https://i.postimg.cc/TYCYZxV0/Untitled-design-(4).png";
+    const SPACING = 140; // Adjusted spacing for larger thimbles
 
     useEffect(() => {
         if (props.gameState === 'shuffling') {
@@ -111,10 +112,8 @@ const ThimbleGame = React.memo((props: {
         }
     }, [props.gameState]);
 
-    // Adjusted spacing for larger thimbles
     const getPositionStyles = (posIndex: number) => {
-        const spacing = 150; // Increased spacing for larger thimbles
-        const xOffset = (posIndex - 1) * spacing; 
+        const xOffset = (posIndex - 1) * SPACING; 
         return { transform: `translateX(${xOffset}px)` };
     };
 
@@ -161,15 +160,15 @@ const ThimbleGame = React.memo((props: {
                 </div>
 
                 {/* Game Area */}
-                <div className="relative w-full h-80 flex items-center justify-center mb-10">
+                <div className="relative w-full h-[400px] flex items-center justify-center mb-10">
                      {/* Diamond Container - Absolute centered */}
                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full pointer-events-none">
                         {props.resultPosition !== null && (
                             <div 
                                 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300"
                                 style={{ 
-                                    // Spacing must match the thimble spacing (150px)
-                                    transform: `translate(calc(-50% + ${(props.resultPosition - 1) * 150}px), 40px)`,
+                                    // Spacing must match the thimble spacing
+                                    transform: `translate(calc(-50% + ${(props.resultPosition - 1) * SPACING}px), 60px)`,
                                     opacity: props.gameState === 'revealed' ? 1 : 0
                                 }}
                             >
@@ -179,7 +178,7 @@ const ThimbleGame = React.memo((props: {
                      </div>
 
                      {/* Thimbles Container */}
-                     <div className="relative w-full max-w-[500px] h-80 flex items-center justify-center">
+                     <div className="relative w-full max-w-[500px] h-[400px] flex items-center justify-center">
                         {[0, 1, 2].map((id) => {
                             const currentSlot = positions[id];
                             const isWinner = props.gameState === 'revealed' && currentSlot === props.resultPosition;
@@ -187,10 +186,10 @@ const ThimbleGame = React.memo((props: {
                             return (
                                 <div
                                     key={id}
-                                    className="absolute transition-transform duration-300 ease-in-out w-56 h-56 md:w-80 md:h-80 flex items-center justify-center z-20"
+                                    className="absolute transition-transform duration-300 ease-in-out w-72 h-72 md:w-96 md:h-96 flex items-center justify-center z-20"
                                     style={{
                                         ...getPositionStyles(currentSlot),
-                                        marginTop: isWinner ? '-140px' : '0px',
+                                        marginTop: isWinner ? '-170px' : '0px',
                                         zIndex: isWinner ? 30 : 20
                                     }}
                                 >
