@@ -80,7 +80,7 @@ const ThimbleGame = React.memo((props: {
 }) => {
     // 0: Left, 1: Center, 2: Right
     const [positions, setPositions] = useState([0, 1, 2]); 
-    const [spacing, setSpacing] = useState(80); // Default to mobile safe spacing
+    const [spacing, setSpacing] = useState(125); // Default to increased mobile spacing
     const shuffleIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
     const THIMBLE_IMAGE = "https://i.postimg.cc/TYCYZxV0/Untitled-design-(4).png";
@@ -89,9 +89,9 @@ const ThimbleGame = React.memo((props: {
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth >= 768) {
-                setSpacing(160); // Desktop spacing
+                setSpacing(260); // Desktop spacing increased for larger images
             } else {
-                setSpacing(80); // Mobile spacing to fit 3 items with w-64
+                setSpacing(125); // Mobile spacing increased to separate images
             }
         };
         
