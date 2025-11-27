@@ -179,7 +179,7 @@ const ThimbleGame = React.memo((props: {
                      </div>
 
                      {/* Thimbles Container */}
-                     <div className="relative w-[390px] h-40 flex items-center justify-center">
+                     <div className="relative w-[390px] h-60 flex items-center justify-center">
                         {[0, 1, 2].map((id) => {
                             const currentSlot = positions[id];
                             const isWinner = props.gameState === 'revealed' && currentSlot === props.resultPosition;
@@ -187,10 +187,10 @@ const ThimbleGame = React.memo((props: {
                             return (
                                 <div
                                     key={id}
-                                    className="absolute transition-transform duration-300 ease-in-out w-32 h-32 md:w-36 md:h-36 flex items-center justify-center z-20"
+                                    className="absolute transition-transform duration-300 ease-in-out w-44 h-44 md:w-64 md:h-64 flex items-center justify-center z-20"
                                     style={{
                                         ...getPositionStyles(currentSlot),
-                                        marginTop: isWinner ? '-90px' : '0px',
+                                        marginTop: isWinner ? '-110px' : '0px',
                                         zIndex: isWinner ? 30 : 20
                                     }}
                                 >
