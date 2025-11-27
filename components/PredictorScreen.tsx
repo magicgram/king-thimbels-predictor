@@ -84,7 +84,25 @@ const ThimbleGame = React.memo((props: {
     const [diamondOffset, setDiamondOffset] = useState(46); // Default mobile offset
     const shuffleIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
+    // Time State
+    const [time, setTime] = useState(new Date());
+
     const THIMBLE_IMAGE = "https://i.postimg.cc/TYCYZxV0/Untitled-design-(4).png";
+
+    // Clock Timer
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setTime(new Date());
+        }, 1000);
+        return () => clearInterval(timer);
+    }, []);
+
+    const formatTime = (date: Date) => {
+        const h = date.getHours().toString().padStart(2, '0');
+        const m = date.getMinutes().toString().padStart(2, '0');
+        const s = date.getSeconds().toString().padStart(2, '0');
+        return `${h}:${m}:${s}`;
+    };
 
     // Responsive spacing and diamond positioning
     useEffect(() => {
@@ -173,7 +191,7 @@ const ThimbleGame = React.memo((props: {
                 </div>
             </header>
 
-            <main className="flex-grow flex flex-col items-center w-full max-w-xl mx-auto px-4 z-10 relative pt-4 md:pt-8 pb-10">
+            <main className="flex-grow flex flex-col items-center w-full max-w-xl mx-auto px-4 z-10 relative pt-4 md:pt-8 pb-4">
                 
                 {/* Result Display Container */}
                 <div 
@@ -253,6 +271,13 @@ const ThimbleGame = React.memo((props: {
                 </button>
 
             </main>
+
+            {/* CLOCK FOOTER */}
+            <footer className="w-full z-30 py-4 bg-[#b45309] border-t-2 border-white/40 flex justify-center items-center mt-auto shadow-[0_-5px_15px_rgba(0,0,0,0.3)]">
+                 <h2 className="font-russo text-5xl text-white tracking-widest drop-shadow-[0_2px_2px_rgba(0,0,0,0.5)]">
+                    {formatTime(time)}
+                 </h2>
+            </footer>
 
             <style>{`
                 @keyframes fade-in-up {
