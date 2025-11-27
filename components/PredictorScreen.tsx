@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import type { User } from '../types';
 import { usePrediction } from '../services/authService';
 import Sidebar from './Sidebar';
@@ -13,8 +13,7 @@ interface PredictorScreenProps {
   onLogout: () => void;
 }
 
-// --- Icons ---
-
+// Icons
 const MenuIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg {...props} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
     <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
@@ -27,39 +26,30 @@ const GuideIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   </svg>
 );
 
-const RefreshIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-  <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-    <path fillRule="evenodd" d="M4.755 10.059a7.5 7.5 0 0112.548-3.364l1.903 1.903h-3.183a.75.75 0 100 1.5h4.992a.75.75 0 00.75-.75V4.356a.75.75 0 00-1.5 0v3.18l-1.9-1.9A9 9 0 003.306 9.67a.75.75 0 101.45.388zm15.408 3.352a.75.75 0 00-.919.53 7.5 7.5 0 01-12.548 3.364l-1.902-1.903h3.183a.75.75 0 000-1.5H2.984a.75.75 0 00-.75.75v4.992a.75.75 0 001.5 0v-3.18l1.9 1.9a9 9 0 0015.059-4.035.75.75 0 00-.53-.918z" clipRule="evenodd" />
-  </svg>
-);
-
-const PlayIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-  <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-    <path fillRule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l13.96 7.376c1.268.67 1.268 2.514 0 3.184l-13.96 7.376c-1.25.687-2.779-.217-2.779-1.643V5.653z" clipRule="evenodd" />
-  </svg>
-);
-
-// Custom Star Icon
-const StarIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" className="w-full h-full drop-shadow-sm">
+// Diamond Asset
+const Diamond = () => (
+  <svg viewBox="0 0 24 24" fill="none" className="w-12 h-12 md:w-16 md:h-16 drop-shadow-md animate-pulse">
     <path 
-        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" 
-        fill="#fbbf24" 
-        stroke="none"
+        d="M12 2L2 12l10 10 10-10L12 2z" 
+        fill="#ef4444" 
+        stroke="#b91c1c"
+        strokeWidth="1"
+    />
+    <path 
+        d="M12 2L7 12h10L12 2z" 
+        fill="rgba(255,255,255,0.3)" 
     />
   </svg>
 );
 
-// --- Limit Reached View ---
-
+// Limit Reached View
 const LimitReachedView = React.memo(({ handleDepositRedirect }: { handleDepositRedirect: () => void; }) => {
   const { t } = useLanguage();
 
   return (
      <div 
-        className="w-full h-screen flex flex-col font-poppins relative overflow-hidden items-center justify-center p-4"
+        className="w-full h-screen flex flex-col font-poppins relative overflow-hidden items-center justify-center p-4 bg-[#0b2545]"
       >
-        {/* Gradient Background matching reference */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#38bdf8] to-[#0284c7] z-0"></div>
 
         <div className="w-full max-w-sm bg-[#0b2545] rounded-2xl p-8 border-b-4 border-[#06162d] text-center shadow-2xl z-10">
@@ -79,185 +69,176 @@ const LimitReachedView = React.memo(({ handleDepositRedirect }: { handleDepositR
   );
 });
 
-type GridItemType = 'empty' | 'star' | 'mine';
-
-const PredictorView = React.memo((props: {
+// Thimble Game Component
+const ThimbleGame = React.memo((props: {
     onOpenSidebar: () => void;
     onOpenGuide: () => void;
-    gridState: GridItemType[];
-    selectedTraps: number;
-    setSelectedTraps: (val: number) => void;
-    isSignalActive: boolean;
-    onGetSignal: () => void;
-    onRefresh: () => void;
-    confidence: number | null;
+    onStart: () => void;
+    gameState: 'idle' | 'shuffling' | 'revealed';
+    resultPosition: number | null; // 0, 1, 2
     isLoading: boolean;
 }) => {
-    const [currentTime, setCurrentTime] = useState(new Date());
-    const { t } = useLanguage();
+    // 0: Left, 1: Center, 2: Right
+    // We track where each thimble (by ID 0,1,2) is currently located (position 0,1,2)
+    const [positions, setPositions] = useState([0, 1, 2]); 
+    const shuffleIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+    const THIMBLE_IMAGE = "https://i.postimg.cc/7YqkHzBM/Untitled-design-(1).jpg";
 
     useEffect(() => {
-        const timer = setInterval(() => {
-            setCurrentTime(new Date());
-        }, 1000);
-        return () => clearInterval(timer);
-    }, []);
+        if (props.gameState === 'shuffling') {
+            // Start shuffle animation loop
+            const shuffle = () => {
+                setPositions(prev => {
+                    const newPos = [...prev];
+                    // Random swap
+                    const idx1 = Math.floor(Math.random() * 3);
+                    let idx2 = Math.floor(Math.random() * 3);
+                    while (idx1 === idx2) idx2 = Math.floor(Math.random() * 3);
+                    
+                    // Swap values
+                    const temp = newPos[idx1];
+                    newPos[idx1] = newPos[idx2];
+                    newPos[idx2] = temp;
+                    return newPos;
+                });
+            };
 
-    const formattedTime = currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            // Shuffle every 300ms
+            shuffleIntervalRef.current = setInterval(shuffle, 300);
+            
+            return () => {
+                if (shuffleIntervalRef.current) clearInterval(shuffleIntervalRef.current);
+            };
+        } else if (props.gameState === 'revealed' || props.gameState === 'idle') {
+            if (shuffleIntervalRef.current) clearInterval(shuffleIntervalRef.current);
+            // Reset to clean positions for visual clarity
+            setPositions([0, 1, 2]);
+        }
+    }, [props.gameState]);
+
+    // Position calc
+    const getPositionStyles = (posIndex: number) => {
+        // Assume container is flex centered.
+        // We use translate X relative to center.
+        // 0 -> -110px, 1 -> 0px, 2 -> 110px
+        const spacing = 110; 
+        const xOffset = (posIndex - 1) * spacing; 
+        return { transform: `translateX(${xOffset}px)` };
+    };
+
+    const getResultText = () => {
+        if (props.gameState !== 'revealed' || props.resultPosition === null) return null;
+        if (props.resultPosition === 0) return "LEFT";
+        if (props.resultPosition === 1) return "CENTER";
+        if (props.resultPosition === 2) return "RIGHT";
+        return "";
+    };
 
     return (
-        <div className="w-full min-h-screen flex flex-col relative font-poppins overflow-hidden bg-[#0ea5e9]">
-            {/* Enhanced Blue Background to match reference */}
-            <div className="absolute inset-0 bg-gradient-to-b from-[#38bdf8] to-[#0284c7] z-0"></div>
-
-            {/* Top Bar */}
-            <header className="w-full flex justify-between items-center p-5 z-10">
-                <div className="bg-[#0b2545] border-2 border-[#06162d] rounded-xl px-4 py-2 shadow-lg backdrop-blur-sm bg-opacity-80">
-                    <div className="text-[10px] text-[#38bdf8] font-russo uppercase tracking-widest leading-none mb-1">{t('realTime')}</div>
-                    <div className="text-white font-mono font-bold text-lg leading-none tracking-wide">
-                        {formattedTime}
-                    </div>
-                </div>
-                
-                <div className="flex items-center gap-3">
-                    <button onClick={props.onOpenGuide} className="p-2 rounded-full bg-black/10 text-[#001e3c] hover:bg-black/20 transition active:scale-90">
+        <div className="w-full min-h-screen flex flex-col relative font-poppins overflow-hidden">
+            {/* Glossy Yellow-Orange Gradient Background */}
+            <div className="absolute inset-0 bg-gradient-to-b from-[#fbbf24] via-[#f59e0b] to-[#ea580c] z-0"></div>
+            
+            {/* Header */}
+            <header className="w-full flex justify-between items-center p-5 z-20">
+                <div className="w-10"></div> {/* Spacer for centering if needed, or keep buttons */}
+                <div className="flex items-center gap-3 ml-auto">
+                    <button onClick={props.onOpenGuide} className="p-2 rounded-full bg-black/10 text-white/80 hover:bg-black/20 transition active:scale-90">
                         <GuideIcon className="w-7 h-7" />
                     </button>
-                    <button onClick={props.onOpenSidebar} className="p-2 rounded-full bg-black/10 text-[#001e3c] hover:bg-black/20 transition active:scale-90">
+                    <button onClick={props.onOpenSidebar} className="p-2 rounded-full bg-black/10 text-white/80 hover:bg-black/20 transition active:scale-90">
                         <MenuIcon className="w-7 h-7" />
                     </button>
                 </div>
             </header>
 
-            <main className="flex-grow flex flex-col items-center w-full max-w-md mx-auto px-4 z-10 relative -mt-8">
+            <main className="flex-grow flex flex-col items-center justify-center w-full max-w-lg mx-auto px-4 z-10 relative pb-20">
                 
-                {/* Title Area - Dark text matching reference */}
-                <div className="mb-6 mt-8 text-center">
-                    <h1 className="font-russo text-5xl text-[#001e3c] tracking-wide leading-none drop-shadow-sm opacity-90">
-                        MINES
-                    </h1>
-                    <h2 className="font-russo text-3xl md:text-4xl text-[#001e3c] tracking-wide leading-none drop-shadow-sm opacity-90">
-                        PREDICTOR VIP
-                    </h2>
+                {/* Result Text */}
+                <div className="h-16 mb-8 flex items-center justify-center">
+                    {props.gameState === 'revealed' && (
+                        <h1 className="font-russo text-5xl text-white tracking-widest drop-shadow-[0_4px_4px_rgba(0,0,0,0.3)] animate-fade-in-up">
+                            {getResultText()}
+                        </h1>
+                    )}
                 </div>
 
-                {/* 5x5 Grid - Dark squares with blue dots */}
-                <div className="p-2 rounded-2xl w-full aspect-square max-w-[350px] mb-6">
-                    <div className="grid grid-cols-5 grid-rows-5 gap-3 w-full h-full">
-                        {props.gridState.map((item, index) => (
+                {/* Game Area */}
+                <div className="relative w-full h-64 flex items-center justify-center mb-12">
+                     {/* Diamond Container - Absolute centered */}
+                     {/* We position the diamond based on the RESULT position. */}
+                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[330px] h-full pointer-events-none">
+                        {props.resultPosition !== null && (
                             <div 
-                                key={index}
-                                className={`
-                                    relative w-full h-full rounded-lg flex items-center justify-center overflow-visible
-                                    transition-all duration-300
-                                    bg-[#0b2545]
-                                    shadow-[0_4px_0_#06162d]
-                                `}
+                                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300"
+                                style={{ 
+                                    transform: `translate(calc(-50% + ${(props.resultPosition - 1) * 110}px), -30%)`,
+                                    opacity: props.gameState === 'revealed' ? 1 : 0
+                                }}
                             >
-                                {/* Standard State: Blue Dot */}
-                                {(item === 'empty' || item === 'mine') && (
-                                    <div className="w-4 h-4 rounded-full bg-[#38bdf8] shadow-[0_0_8px_rgba(56,189,248,0.6)]"></div>
-                                )}
-                                
-                                {/* Signal State: Star */}
-                                {item === 'star' && (
-                                    <div className="w-[70%] h-[70%] flex items-center justify-center animate-pop-in z-10">
-                                        <StarIcon />
-                                    </div>
-                                )}
+                                <Diamond />
                             </div>
-                        ))}
-                    </div>
-                </div>
-
-                {/* Trap Selection Buttons - Blue Pill Shape */}
-                <div className="flex justify-between w-full max-w-[350px] gap-3 mb-6">
-                    {[1, 3, 5].map((traps) => (
-                        <button
-                            key={traps}
-                            onClick={() => !props.isSignalActive && props.setSelectedTraps(traps)}
-                            disabled={props.isSignalActive}
-                            className={`
-                                flex-1 py-2.5 rounded-full font-russo text-lg tracking-wider transition-all duration-200 border-b-4
-                                ${props.selectedTraps === traps 
-                                    ? 'bg-[#0284c7] border-[#075985] text-white shadow-lg translate-y-[1px]' 
-                                    : 'bg-[#38bdf8] border-[#0284c7] text-[#0c4a6e] hover:brightness-110'}
-                                ${props.isSignalActive ? 'opacity-80 cursor-not-allowed' : 'active:scale-95 active:border-b-0 active:translate-y-1'}
-                            `}
-                        >
-                            {traps} {t('traps')}
-                        </button>
-                    ))}
-                </div>
-
-                {/* Controls */}
-                <div className="w-full max-w-[350px] flex gap-3 mb-6 h-[60px]">
-                    {/* Refresh Button - Circular Blue */}
-                    <button
-                        onClick={props.onRefresh}
-                        disabled={!props.isSignalActive} 
-                        className={`
-                            h-full aspect-square rounded-full flex items-center justify-center border-b-4 transition-all
-                            ${props.isSignalActive 
-                                ? 'bg-[#38bdf8] border-[#0284c7] text-[#0c4a6e] shadow-lg active:border-b-0 active:translate-y-1 hover:brightness-110 cursor-pointer' 
-                                : 'bg-[#64748b] border-[#475569] text-gray-400 cursor-not-allowed'}
-                        `}
-                    >
-                        <RefreshIcon className={`w-8 h-8 ${props.isSignalActive ? 'animate-spin-once' : ''}`} />
-                    </button>
-
-                    {/* Get Signal Button - Green Pill */}
-                    <button
-                        onClick={props.onGetSignal}
-                        disabled={props.isSignalActive || props.isLoading}
-                        className={`
-                            flex-1 h-full rounded-full flex items-center justify-center gap-2 font-russo text-2xl tracking-wide border-b-4 transition-all shadow-xl
-                            ${!props.isSignalActive && !props.isLoading
-                                ? 'bg-gradient-to-r from-[#4ade80] to-[#16a34a] border-[#14532d] text-[#064e3b] hover:brightness-110 active:border-b-0 active:translate-y-1'
-                                : 'bg-[#334155] border-[#1e293b] text-gray-500 cursor-not-allowed'}
-                        `}
-                    >
-                        {props.isLoading ? (
-                            <div className="flex space-x-1">
-                                <div className="w-3 h-3 bg-current rounded-full animate-bounce delay-0"></div>
-                                <div className="w-3 h-3 bg-current rounded-full animate-bounce delay-150"></div>
-                                <div className="w-3 h-3 bg-current rounded-full animate-bounce delay-300"></div>
-                            </div>
-                        ) : (
-                            <>
-                                <PlayIcon className="w-8 h-8" />
-                                {t('getSignal')}
-                            </>
                         )}
-                    </button>
+                     </div>
+
+                     {/* Thimbles Container */}
+                     <div className="relative w-[330px] h-32 flex items-center justify-center">
+                        {[0, 1, 2].map((id) => {
+                            // Current visual slot (0, 1, 2) for this thimble ID
+                            const currentSlot = positions[id];
+                            
+                            // Check if this thimble should lift.
+                            const isWinner = props.gameState === 'revealed' && currentSlot === props.resultPosition;
+
+                            return (
+                                <div
+                                    key={id}
+                                    className="absolute transition-transform duration-300 ease-in-out w-28 h-28 flex items-center justify-center z-20"
+                                    style={{
+                                        ...getPositionStyles(currentSlot),
+                                        // Add lift effect if winner
+                                        marginTop: isWinner ? '-70px' : '0px',
+                                    }}
+                                >
+                                    <img 
+                                        src={THIMBLE_IMAGE} 
+                                        alt="Thimble" 
+                                        className="w-full h-full object-contain drop-shadow-2xl"
+                                        style={{ 
+                                            filter: 'drop-shadow(0 10px 10px rgba(0,0,0,0.4))',
+                                            mixBlendMode: 'multiply' 
+                                        }} 
+                                    />
+                                </div>
+                            );
+                        })}
+                     </div>
                 </div>
 
-                {/* Confidence Meter - Dark Blue Pill */}
-                <div className="w-full max-w-[350px] bg-[#0284c7] border-b-4 border-[#075985] rounded-full py-3 px-6 text-center shadow-lg">
-                    <p className="font-russo text-xl text-white tracking-widest">
-                        {t('confidence')}:- <span className="text-white filter drop-shadow-sm">
-                            {props.confidence ? `${props.confidence}%` : '80%'}
-                        </span>
-                    </p>
-                </div>
+                {/* Start Button */}
+                <button
+                    onClick={props.onStart}
+                    disabled={props.isLoading || props.gameState === 'shuffling'}
+                    className={`
+                        relative w-48 h-16 rounded-full font-russo text-2xl tracking-wider text-white shadow-[0_6px_0_rgba(0,0,0,0.3)] transition-all
+                        ${props.gameState === 'shuffling' || props.isLoading
+                            ? 'bg-gray-500 cursor-not-allowed opacity-80' 
+                            : 'bg-gradient-to-b from-red-500 to-red-700 hover:brightness-110 active:shadow-[0_2px_0_rgba(0,0,0,0.3)] active:translate-y-1'}
+                    `}
+                >
+                    {props.gameState === 'shuffling' ? '...' : 'START'}
+                </button>
 
             </main>
-            
+
             <style>{`
-                @keyframes pop-in {
-                    0% { transform: scale(0); opacity: 0; }
-                    60% { transform: scale(1.2); opacity: 1; }
-                    100% { transform: scale(1); }
+                @keyframes fade-in-up {
+                    from { opacity: 0; transform: translateY(20px); }
+                    to { opacity: 1; transform: translateY(0); }
                 }
-                .animate-pop-in {
-                    animation: pop-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-                }
-                @keyframes spin-once {
-                    from { transform: rotate(0deg); }
-                    to { transform: rotate(360deg); }
-                }
-                .animate-spin-once {
-                    animation: spin-once 0.5s ease-out;
+                .animate-fade-in-up {
+                    animation: fade-in-up 0.5s ease-out forwards;
                 }
             `}</style>
         </div>
@@ -272,29 +253,27 @@ const PredictorScreen: React.FC<PredictorScreenProps> = ({ user, onLogout }) => 
   const [showAdminModal, setShowAdminModal] = useState(false);
   const { t } = useLanguage();
 
-  // Mines Specific State
-  const [selectedTraps, setSelectedTraps] = useState<number>(1); 
-  const [gridState, setGridState] = useState<GridItemType[]>(Array(25).fill('empty'));
-  const [isSignalActive, setIsSignalActive] = useState(false);
+  // Thimble Game State
+  const [gameState, setGameState] = useState<'idle' | 'shuffling' | 'revealed'>('idle');
+  const [resultPosition, setResultPosition] = useState<number | null>(null); // 0, 1, 2
   const [isLoading, setIsLoading] = useState(false);
-  const [confidence, setConfidence] = useState<number | null>(null);
   const [profilePic, setProfilePic] = useState<string | null>(null);
 
   useEffect(() => {
     const storedPic = localStorage.getItem(`profile_pic_${user.playerId}`);
-    if (storedPic) {
-      setProfilePic(storedPic);
-    } else {
-      setProfilePic(null);
-    }
+    if (storedPic) setProfilePic(storedPic);
   }, [user.playerId]);
   
   const handleProfilePictureChange = useCallback((newPicUrl: string) => {
     setProfilePic(newPicUrl);
   }, []);
 
-  const handleGetSignal = useCallback(async () => {
-    if (isSignalActive || predictionsLeft <= 0 || isLoading) return;
+  const handleStart = useCallback(async () => {
+    if (gameState === 'shuffling' || predictionsLeft <= 0 || isLoading) return;
+
+    // Reset for restart interaction
+    setGameState('idle');
+    setResultPosition(null);
 
     setIsLoading(true);
 
@@ -308,65 +287,33 @@ const PredictorScreen: React.FC<PredictorScreenProps> = ({ user, onLogout }) => 
       
       setPredictionsLeft(prev => prev - 1);
 
-      const randomConfidence = Math.floor(Math.random() * (99 - 70 + 1)) + 70;
-      const totalCells = 25;
-      let newGrid: GridItemType[] = Array(totalCells).fill('empty');
+      // Start Shuffle Phase
+      setIsLoading(false);
+      setGameState('shuffling');
 
-      if (selectedTraps === 1) {
-        const allIndices = Array.from({ length: totalCells }, (_, i) => i);
-        for (let i = allIndices.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [allIndices[i], allIndices[j]] = [allIndices[j], allIndices[i]];
-        }
-        const selectedIndices = allIndices.slice(0, 5);
-        newGrid = newGrid.map((_, index) => {
-          if (selectedIndices.includes(index)) return 'star';
-          return 'empty';
-        });
-      } else {
-        const numberOfMines = selectedTraps;
-        const allIndices = Array.from({ length: totalCells }, (_, i) => i);
-        for (let i = allIndices.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [allIndices[i], allIndices[j]] = [allIndices[j], allIndices[i]];
-        }
-        const mineIndices = allIndices.slice(0, numberOfMines);
-        newGrid = newGrid.map((_, index) => {
-          if (mineIndices.includes(index)) return 'mine';
-          return 'star';
-        });
-      }
+      // Determine result randomly
+      const winPos = Math.floor(Math.random() * 3); // 0, 1, 2
 
+      // Wait for shuffle animation to finish (e.g., 2 seconds)
       setTimeout(() => {
-          setGridState(newGrid);
-          setConfidence(randomConfidence);
-          setIsSignalActive(true);
-          setIsLoading(false);
-      }, 600);
+          setResultPosition(winPos);
+          setGameState('revealed');
+      }, 2000);
 
     } catch (error) {
-       console.error("Failed to get signal:", error);
+       console.error("Failed to start game:", error);
        alert(t('unexpectedErrorSignal'));
        setIsLoading(false);
     }
-  }, [user.playerId, isSignalActive, predictionsLeft, isLoading, t, selectedTraps]);
+  }, [user.playerId, gameState, predictionsLeft, isLoading, t]);
   
-  const handleRefresh = useCallback(() => {
-    setGridState(Array(25).fill('empty'));
-    setIsSignalActive(false);
-    setConfidence(null);
-  }, []);
-
   const handleDepositRedirect = useCallback(async () => {
     try {
         const response = await fetch('/api/get-affiliate-link');
         const data = await response.json();
         if (response.ok && data.success) {
-            if (window.top) {
-                window.top.location.href = data.link;
-            } else {
-                window.location.href = data.link;
-            }
+            if (window.top) window.top.location.href = data.link;
+            else window.location.href = data.link;
         } else {
             alert(data.message || t('depositLinkNotAvailable'));
         }
@@ -402,16 +349,12 @@ const PredictorScreen: React.FC<PredictorScreenProps> = ({ user, onLogout }) => 
         onTestPostbackClick={handleTestPostbackClick}
       />
       {currentView === 'predictor' && (
-        <PredictorView 
+        <ThimbleGame 
             onOpenSidebar={() => setIsSidebarOpen(true)}
             onOpenGuide={() => setIsGuideOpen(true)}
-            gridState={gridState}
-            selectedTraps={selectedTraps}
-            setSelectedTraps={setSelectedTraps}
-            isSignalActive={isSignalActive}
-            onGetSignal={handleGetSignal}
-            onRefresh={handleRefresh}
-            confidence={confidence}
+            onStart={handleStart}
+            gameState={gameState}
+            resultPosition={resultPosition}
             isLoading={isLoading}
         />
       )}
