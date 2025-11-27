@@ -80,8 +80,8 @@ const ThimbleGame = React.memo((props: {
 }) => {
     // 0: Left, 1: Center, 2: Right
     const [positions, setPositions] = useState([0, 1, 2]); 
-    const [spacing, setSpacing] = useState(125); // Default to increased mobile spacing
-    const [diamondOffset, setDiamondOffset] = useState(112); // Default mobile offset
+    const [spacing, setSpacing] = useState(125); 
+    const [diamondOffset, setDiamondOffset] = useState(46); // Default mobile offset
     const shuffleIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
     const THIMBLE_IMAGE = "https://i.postimg.cc/TYCYZxV0/Untitled-design-(4).png";
@@ -91,12 +91,20 @@ const ThimbleGame = React.memo((props: {
         const handleResize = () => {
             if (window.innerWidth >= 768) {
                 setSpacing(260); // Desktop spacing
-                // Desktop: 480px height / 2 = 240px. Diamond height 32px / 2 = 16px. 240 - 16 = 224px.
-                setDiamondOffset(224); 
+                // Desktop Calculation:
+                // Thimble Height: 480px (30rem). Half: 240px.
+                // Thimble lifts -100px. Visual Bottom Edge = 240 - 100 = 140px.
+                // Diamond Top desired = 140px + 2px (gap) = 142px.
+                // Diamond Center = 142px + 16px (half diamond height) = 158px.
+                setDiamondOffset(158); 
             } else {
                 setSpacing(125); // Mobile spacing
-                // Mobile: 256px height / 2 = 128px. Diamond height 32px / 2 = 16px. 128 - 16 = 112px.
-                setDiamondOffset(112);
+                // Mobile Calculation:
+                // Thimble Height: 256px (h-64). Half: 128px.
+                // Thimble lifts -100px. Visual Bottom Edge = 128 - 100 = 28px.
+                // Diamond Top desired = 28px + 2px (gap) = 30px.
+                // Diamond Center = 30px + 16px (half diamond height) = 46px.
+                setDiamondOffset(46);
             }
         };
         
@@ -180,15 +188,14 @@ const ThimbleGame = React.memo((props: {
                 </div>
 
                 {/* Game Area */}
-                <div className="relative w-full h-64 md:h-[30rem] flex items-center justify-center mb-14 md:mb-20">
+                <div className="relative w-full h-[480px] flex items-center justify-center mb-14 md:mb-20">
                      {/* Diamond Container - Absolute centered */}
                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full pointer-events-none">
                         {props.resultPosition !== null && (
                             <div 
                                 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300"
                                 style={{ 
-                                    // Calculate offset to ensure diamond sits exactly at base of thimble
-                                    // Mobile: 128px (half thimble) - 16px (half diamond) = 112px
+                                    // Offset calculated dynamically to ensure perfect 1-2px gap below lifted thimble
                                     transform: `translate(calc(-50% + ${(props.resultPosition - 1) * spacing}px), ${diamondOffset}px)`,
                                     opacity: props.gameState === 'revealed' ? 1 : 0
                                 }}
@@ -233,7 +240,7 @@ const ThimbleGame = React.memo((props: {
                     onClick={props.onStart}
                     disabled={props.isLoading || props.gameState === 'shuffling'}
                     className={`
-                        relative w-52 h-16 rounded-full font-russo text-2xl tracking-wider text-white shadow-[0_6px_0_#7f1d1d,0_10px_10px_rgba(0,0,0,0.3)] transition-all overflow-hidden border-2 border-red-400/50
+                        relative w-52 h-16 rounded-full font-russo text-2xl tracking-wider text-white shadow-[0_6px_0_#7f1d1d,0_10px_10px_rgba(0,0,0,0.3)] transition-all overflow-hidden border-2 border-red-400/50 -mb-32 md:mb-2
                         ${props.gameState === 'shuffling' || props.isLoading
                             ? 'bg-gray-500 cursor-not-allowed opacity-80 shadow-none translate-y-1' 
                             : 'bg-gradient-to-b from-[#ef4444] via-[#dc2626] to-[#b91c1c] hover:brightness-110 active:shadow-none active:translate-y-[6px]'}
