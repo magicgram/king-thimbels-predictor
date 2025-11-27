@@ -242,10 +242,15 @@ const ThimbleGame = React.memo((props: {
                                     <img 
                                         src={THIMBLE_IMAGE} 
                                         alt="King Thimble" 
-                                        className="w-full h-full object-contain drop-shadow-2xl"
+                                        className="w-full h-full object-contain drop-shadow-2xl select-none pointer-events-none"
                                         style={{ 
-                                            filter: 'drop-shadow(0 15px 10px rgba(0,0,0,0.3))'
+                                            filter: 'drop-shadow(0 15px 10px rgba(0,0,0,0.3))',
+                                            pointerEvents: 'none',
+                                            WebkitUserSelect: 'none',
+                                            userSelect: 'none'
                                         }} 
+                                        draggable="false"
+                                        onContextMenu={(e) => e.preventDefault()}
                                     />
                                 </div>
                             );

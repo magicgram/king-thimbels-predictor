@@ -135,7 +135,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onNavigate, onLogout
                             aria-label={t('changeProfilePic')}
                         >
                             {profilePic ? (
-                                <img src={profilePic} alt={t('profileAlt')} className="w-full h-full rounded-full object-cover" draggable="false" onContextMenu={(e) => e.preventDefault()} />
+                                <img src={profilePic} alt={t('profileAlt')} className="w-full h-full rounded-full object-cover select-none pointer-events-none" draggable="false" onContextMenu={(e) => e.preventDefault()} />
                             ) : (
                                 <UserIcon className="w-8 h-8 text-[#38bdf8]" />
                             )}
@@ -217,7 +217,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onNavigate, onLogout
                         <img 
                             src="https://i.postimg.cc/YSBsSRCd/Picsart-25-11-01-11-32-07-745.png" 
                             alt="NexusPlay Logo" 
-                            className="h-6 opacity-40 group-hover:opacity-90 transition-opacity duration-200"
+                            className="h-6 opacity-40 group-hover:opacity-90 transition-opacity duration-200 select-none pointer-events-none"
                             draggable="false" onContextMenu={(e) => e.preventDefault()}
                         />
                     </div>

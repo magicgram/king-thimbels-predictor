@@ -1,3 +1,4 @@
+
 import React, { useState, useCallback } from 'react';
 import { verifyUser, VerificationResponse } from '../services/authService';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -238,8 +239,13 @@ const LoginScreen: React.FC<LoginScreenProps> = ({
               <img 
                 src={loginImgSrc} 
                 alt={t('unlockPredictions')} 
-                className="w-full h-full object-contain relative z-10" 
-                style={{filter: 'drop-shadow(0 10px 8px rgba(0,0,0,0.3))'}} 
+                className="w-full h-full object-contain relative z-10 select-none pointer-events-none" 
+                style={{
+                    filter: 'drop-shadow(0 10px 8px rgba(0,0,0,0.3))',
+                    pointerEvents: 'none',
+                    WebkitUserSelect: 'none',
+                    userSelect: 'none'
+                }} 
                 draggable="false" 
                 onContextMenu={(e) => e.preventDefault()}
               />

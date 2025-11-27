@@ -25,6 +25,19 @@
         font-family: 'Russo One', sans-serif;
       }
 
+      /* GLOBAL IMAGE PROTECTION */
+      img {
+        -webkit-user-drag: none;
+        -khtml-user-drag: none;
+        -moz-user-drag: none;
+        -o-user-drag: none;
+        user-drag: none;
+        -webkit-touch-callout: none; /* Disable iOS context menu */
+        user-select: none;
+        -webkit-user-select: none;
+        pointer-events: none; /* Disables click/hover/context-menu on the image itself */
+      }
+
       @keyframes shine-move {
         0% { background-position: 200% 0; }
         100% { background-position: -200% 0; }
