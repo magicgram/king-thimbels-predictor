@@ -1,3 +1,4 @@
+
 import React, { useState, useCallback } from 'react';
 import { verifyUser, VerificationResponse } from '../services/authService';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -210,6 +211,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({
   return (
     <div 
         className="w-full min-h-screen flex flex-col items-center justify-between p-4 relative overflow-hidden font-poppins" 
+        style={{ pointerEvents: 'auto' }}
     >
       {/* Gradient Background matching Predictor - Yellow/Orange */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-[#fbbf24] via-[#f59e0b] to-[#b45309] z-0"></div>
@@ -315,7 +317,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({
         )}
       </main>
 
-      <p className="text-[#451a03]/50 text-sm font-poppins z-20 pb-2 font-medium">v15.9.0</p>
+      <p className="text-[#451a03]/50 text-sm font-poppins z-20 pb-2 font-medium">v27.8.0</p>
       
       <style>{`
         @keyframes float {
