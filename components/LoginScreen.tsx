@@ -205,7 +205,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({
   const handleBackFromReDeposit = useCallback(() => setNeedsReDeposit(false), []);
 
   // Image URL for the login screen
-  const loginImgSrc = "https://i.postimg.cc/yNGG1XNC/1.webp";
+  const loginImgSrc = "https://i.postimg.cc/kXXmb1H2/Untitled-design-(5).gif";
 
   return (
     <div 
@@ -234,26 +234,18 @@ const LoginScreen: React.FC<LoginScreenProps> = ({
             </div>
         ) : (
           <>
-            <div className="relative w-48 h-48 mb-4 mx-auto">
+            <div className="relative w-40 h-40 mb-6 mx-auto animate-float">
               <img 
                 src={loginImgSrc} 
                 alt={t('unlockPredictions')} 
                 className="w-full h-full object-contain relative z-10 select-none pointer-events-none" 
                 style={{
-                    filter: 'drop-shadow(0 10px 8px rgba(0,0,0,0.3))',
                     pointerEvents: 'none',
                     WebkitUserSelect: 'none',
                     userSelect: 'none'
                 }} 
                 draggable="false" 
                 onContextMenu={(e) => e.preventDefault()}
-              />
-              <div 
-                className="shine-mask z-20" 
-                style={{
-                  maskImage: `url(${loginImgSrc})`,
-                  WebkitMaskImage: `url(${loginImgSrc})`
-                }}
               />
             </div>
             
@@ -324,6 +316,16 @@ const LoginScreen: React.FC<LoginScreenProps> = ({
       </main>
 
       <p className="text-[#451a03]/50 text-sm font-poppins z-20 pb-2 font-medium">v15.9.0</p>
+      
+      <style>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0); filter: drop-shadow(0 10px 5px rgba(0,0,0,0.2)); }
+          50% { transform: translateY(-15px); filter: drop-shadow(0 25px 15px rgba(0,0,0,0.15)); }
+        }
+        .animate-float {
+          animation: float 4s ease-in-out infinite;
+        }
+      `}</style>
     </div>
   );
 };
