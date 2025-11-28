@@ -75,23 +75,23 @@ const GuideModal: React.FC<GuideModalProps> = ({ onClose }) => {
               <main className="flex-grow overflow-y-auto p-6">
                   <div className="space-y-6 text-white/90">
                     <div className="flex items-start gap-4">
-                        <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-[#38bdf8] text-[#0b2545] font-bold font-russo">1</div>
+                        <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-[#fbbf24] text-[#0b2545] font-bold font-russo">1</div>
                         <p className="pt-1 text-sm font-medium">{t('guideStep1')}</p>
                     </div>
                     <div className="flex items-start gap-4">
-                        <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-[#38bdf8] text-[#0b2545] font-bold font-russo">2</div>
+                        <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-[#fbbf24] text-[#0b2545] font-bold font-russo">2</div>
                         <p className="pt-1 text-sm font-medium">{t('guideStep2')}</p>
                     </div>
                     <div className="flex items-start gap-4">
-                        <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-[#38bdf8] text-[#0b2545] font-bold font-russo">3</div>
+                        <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-[#fbbf24] text-[#0b2545] font-bold font-russo">3</div>
                         <p className="pt-1 text-sm font-medium">{t('guideStep3')}</p>
                     </div>
                     <div className="flex items-start gap-4">
-                        <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-[#38bdf8] text-[#0b2545] font-bold font-russo">4</div>
+                        <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-[#fbbf24] text-[#0b2545] font-bold font-russo">4</div>
                         <div className="flex-grow">
                           <p className="text-sm font-medium">{t('guideStep4')}</p>
                           <div className="mt-2 flex items-center justify-between bg-[#06162d] p-3 rounded-xl border border-[#1e293b]">
-                              <span className="font-russo text-xl text-[#38bdf8] tracking-wider">{promoCode}</span>
+                              <span className="font-russo text-xl text-[#fbbf24] tracking-wider">{promoCode}</span>
                               <button onClick={handleCopy} className="p-2 bg-[#1e293b] rounded-lg text-gray-300 hover:text-white hover:bg-[#334155] transition-colors" aria-label={t('copyPromocode')}>
                                   {copied ? <CheckIcon className="w-5 h-5 text-green-400" /> : <CopyIcon className="w-5 h-5" />}
                               </button>
@@ -105,10 +105,10 @@ const GuideModal: React.FC<GuideModalProps> = ({ onClose }) => {
                   <div>
                       <h2 className="text-lg font-bold text-center text-white mb-4 uppercase font-russo">{t('howToFindPlayerId')}</h2>
                       <div className="space-y-3 text-gray-300 text-sm">
-                          <div className="flex items-start gap-3"><div className="flex-shrink-0 w-6 h-6 flex items-center justify-center rounded-full bg-[#1e293b] text-[#38bdf8] text-xs font-bold">1</div><p className="pt-0.5">{t('playerIdStep1')}</p></div>
-                          <div className="flex items-start gap-3"><div className="flex-shrink-0 w-6 h-6 flex items-center justify-center rounded-full bg-[#1e293b] text-[#38bdf8] text-xs font-bold">2</div><p className="pt-0.5">{t('playerIdStep2')}</p></div>
-                          <div className="flex items-start gap-3"><div className="flex-shrink-0 w-6 h-6 flex items-center justify-center rounded-full bg-[#1e293b] text-[#38bdf8] text-xs font-bold">3</div><p className="pt-0.5">{t('playerIdStep3')}</p></div>
-                          <div className="flex items-start gap-3"><div className="flex-shrink-0 w-6 h-6 flex items-center justify-center rounded-full bg-[#1e293b] text-[#38bdf8] text-xs font-bold">4</div><p className="pt-0.5">{t('playerIdStep4')}</p></div>
+                          <div className="flex items-start gap-3"><div className="flex-shrink-0 w-6 h-6 flex items-center justify-center rounded-full bg-[#1e293b] text-[#fbbf24] text-xs font-bold">1</div><p className="pt-0.5">{t('playerIdStep1')}</p></div>
+                          <div className="flex items-start gap-3"><div className="flex-shrink-0 w-6 h-6 flex items-center justify-center rounded-full bg-[#1e293b] text-[#fbbf24] text-xs font-bold">2</div><p className="pt-0.5">{t('playerIdStep2')}</p></div>
+                          <div className="flex items-start gap-3"><div className="flex-shrink-0 w-6 h-6 flex items-center justify-center rounded-full bg-[#1e293b] text-[#fbbf24] text-xs font-bold">3</div><p className="pt-0.5">{t('playerIdStep3')}</p></div>
+                          <div className="flex items-start gap-3"><div className="flex-shrink-0 w-6 h-6 flex items-center justify-center rounded-full bg-[#1e293b] text-[#fbbf24] text-xs font-bold">4</div><p className="pt-0.5">{t('playerIdStep4')}</p></div>
                       </div>
                   </div>
               </main>
@@ -116,7 +116,7 @@ const GuideModal: React.FC<GuideModalProps> = ({ onClose }) => {
               <footer className="w-full p-6 bg-[#06162d]/30">
                 <button
                 onClick={onClose}
-                className="w-full py-3 bg-gradient-to-r from-[#4ade80] to-[#16a34a] text-[#064e3b] font-poppins font-bold text-lg uppercase rounded-full transition-all hover:brightness-110 active:scale-95 shadow-lg border-b-4 border-[#14532d] active:border-b-0 active:translate-y-1"
+                className="w-full py-3 bg-gradient-to-b from-[#ef4444] via-[#dc2626] to-[#b91c1c] text-white font-poppins font-bold text-lg uppercase rounded-full transition-all hover:brightness-110 active:scale-95 shadow-lg border-b-4 border-red-900 active:border-b-0 active:translate-y-1"
                 aria-label={t('closeGuide')}
                 >
                 {t('gotIt')}

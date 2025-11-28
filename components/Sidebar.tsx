@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { languages } from '../lib/i18n';
@@ -61,7 +60,7 @@ const NavButton: React.FC<{onClick: () => void; disabled?: boolean; children: Re
    <button 
       onClick={onClick}
       disabled={disabled}
-      className="group flex w-full items-center gap-4 p-3 rounded-lg text-left text-white/80 hover:bg-[#0ea5e9]/20 hover:text-white transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+      className="group flex w-full items-center gap-4 p-3 rounded-lg text-left text-white/80 hover:bg-[#fbbf24]/20 hover:text-white transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
   >
       {children}
   </button>
@@ -130,14 +129,14 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onNavigate, onLogout
                     <div className="flex items-center gap-3">
                         <button
                             onClick={handleProfilePicClick}
-                            className="w-12 h-12 flex-shrink-0 bg-[#0b2545] border-2 border-[#38bdf8] rounded-full group relative disabled:cursor-not-allowed flex items-center justify-center overflow-hidden"
+                            className="w-12 h-12 flex-shrink-0 bg-[#0b2545] border-2 border-[#fbbf24] rounded-full group relative disabled:cursor-not-allowed flex items-center justify-center overflow-hidden"
                             disabled={!isLoggedIn}
                             aria-label={t('changeProfilePic')}
                         >
                             {profilePic ? (
                                 <img src={profilePic} alt={t('profileAlt')} className="w-full h-full rounded-full object-cover select-none pointer-events-none" draggable="false" onContextMenu={(e) => e.preventDefault()} />
                             ) : (
-                                <UserIcon className="w-8 h-8 text-[#38bdf8]" />
+                                <UserIcon className="w-8 h-8 text-[#fbbf24]" />
                             )}
                             {isLoggedIn && (
                                 <div className="absolute inset-0 bg-black/60 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
@@ -147,7 +146,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onNavigate, onLogout
                         </button>
                         <div>
                             <p className="font-bold text-lg text-white truncate max-w-40 font-russo">{playerId ? t('welcomeUser', {playerId}) : t('welcome')}</p>
-                            <p className="text-xs text-[#38bdf8] font-poppins uppercase tracking-wider">Mines Predictor VIP</p>
+                            <p className="text-xs text-[#fbbf24] font-poppins uppercase tracking-wider">Mines Predictor VIP</p>
                         </div>
                     </div>
                     <button onClick={onClose} className="p-1 -mt-1 -mr-1 rounded-full text-white/70 hover:bg-white/10 hover:text-white transition-colors">
@@ -162,12 +161,12 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onNavigate, onLogout
                         onClick={() => onNavigate('predictor')}
                         disabled={!isLoggedIn}
                     >
-                        <HomeIcon className="w-6 h-6 text-white/50 transition-colors group-hover:text-[#38bdf8] group-disabled:text-white/30"/>
+                        <HomeIcon className="w-6 h-6 text-white/50 transition-colors group-hover:text-[#fbbf24] group-disabled:text-white/30"/>
                         <span className="font-semibold">{t('predictorHome')}</span>
                     </NavButton>
 
                     <NavButton onClick={onTestPostbackClick}>
-                         <TestIcon className="w-6 h-6 text-white/50 transition-colors group-hover:text-[#38bdf8] group-disabled:text-white/30"/>
+                         <TestIcon className="w-6 h-6 text-white/50 transition-colors group-hover:text-[#fbbf24] group-disabled:text-white/30"/>
                          <span className="font-semibold">{t('testPostback')}</span>
                     </NavButton>
 
@@ -175,23 +174,23 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onNavigate, onLogout
                         <div>
                              <button
                                 onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
-                                className="group flex w-full items-center justify-between gap-4 p-3 rounded-lg text-left text-white/80 hover:bg-[#0ea5e9]/20 hover:text-white transition-colors duration-200"
+                                className="group flex w-full items-center justify-between gap-4 p-3 rounded-lg text-left text-white/80 hover:bg-[#fbbf24]/20 hover:text-white transition-colors duration-200"
                             >
                                 <div className="flex items-center gap-4">
-                                    <LanguageIcon className="w-6 h-6 text-white/50 transition-colors group-hover:text-[#38bdf8]" />
+                                    <LanguageIcon className="w-6 h-6 text-white/50 transition-colors group-hover:text-[#fbbf24]" />
                                     <span className="font-semibold">{t('language')}</span>
                                 </div>
-                                <svg className={`w-5 h-5 text-white/50 transition-transform group-hover:text-[#38bdf8] ${isLangMenuOpen ? 'rotate-180' : ''}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                                <svg className={`w-5 h-5 text-white/50 transition-transform group-hover:text-[#fbbf24] ${isLangMenuOpen ? 'rotate-180' : ''}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                                 </svg>
                             </button>
                             {isLangMenuOpen && (
-                                <div className="mt-2 ml-4 pl-4 border-l-2 border-[#38bdf8]/20 max-h-60 overflow-y-auto">
+                                <div className="mt-2 ml-4 pl-4 border-l-2 border-[#fbbf24]/20 max-h-60 overflow-y-auto">
                                     {languages.map((lang) => (
                                         <button
                                             key={lang.code}
                                             onClick={() => handleLanguageSelect(lang.code)}
-                                            className={`w-full text-left p-2 rounded-md text-sm transition-colors ${language === lang.code ? 'bg-[#0ea5e9]/20 text-[#38bdf8] font-bold' : 'text-gray-300 hover:bg-white/10'}`}
+                                            className={`w-full text-left p-2 rounded-md text-sm transition-colors ${language === lang.code ? 'bg-[#fbbf24]/20 text-[#fbbf24] font-bold' : 'text-gray-300 hover:bg-white/10'}`}
                                         >
                                             {lang.flag} {lang.name}
                                         </button>
@@ -208,7 +207,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, onNavigate, onLogout
                     <div>
                         {isLoggedIn && (
                              <NavButton onClick={onLogout}>
-                                <LogoutIcon className="w-6 h-6 text-white/50 transition-colors group-hover:text-[#38bdf8] group-disabled:text-white/30"/>
+                                <LogoutIcon className="w-6 h-6 text-white/50 transition-colors group-hover:text-[#fbbf24] group-disabled:text-white/30"/>
                                 <span className="font-semibold">{t('logout')}</span>
                             </NavButton>
                         )}

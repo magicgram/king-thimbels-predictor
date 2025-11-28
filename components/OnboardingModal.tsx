@@ -2,20 +2,20 @@ import React from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const HowToPlayIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-    <svg {...props} xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-[#38bdf8]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <svg {...props} xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-[#fbbf24]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
         <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
     </svg>
 );
 
 const LinkIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-    <svg {...props} xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-[#38bdf8]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <svg {...props} xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-[#fbbf24]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
     </svg>
 );
 
 const ChartIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-    <svg {...props} xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-[#38bdf8]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <svg {...props} xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-[#fbbf24]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
     </svg>
 );
@@ -71,16 +71,16 @@ const OnboardingModal: React.FC<OnboardingModalProps> = ({ onClose }) => {
                   </div>
               </div>
               
-              <div className="text-center p-3 bg-[#38bdf8]/10 border border-[#38bdf8]/30 rounded-lg mt-4">
-                  <p className="font-bold text-[#38bdf8] text-sm">{t('disclaimer')}</p>
-                  <p className="text-xs text-[#38bdf8]/80">{t('disclaimerText')}</p>
+              <div className="text-center p-3 bg-[#fbbf24]/10 border border-[#fbbf24]/30 rounded-lg mt-4">
+                  <p className="font-bold text-[#fbbf24] text-sm">{t('disclaimer')}</p>
+                  <p className="text-xs text-[#fbbf24]/80">{t('disclaimerText')}</p>
               </div>
           </main>
           
           <footer className="w-full p-6 bg-[#06162d]/30">
               <button
                 onClick={onClose}
-                className="w-full py-3 bg-gradient-to-r from-[#4ade80] to-[#16a34a] text-[#064e3b] font-poppins font-bold text-lg uppercase rounded-full transition-all hover:brightness-110 active:scale-95 shadow-lg border-b-4 border-[#14532d] active:border-b-0 active:translate-y-1"
+                className="w-full py-3 bg-gradient-to-b from-[#ef4444] via-[#dc2626] to-[#b91c1c] text-white font-poppins font-bold text-lg uppercase rounded-full transition-all hover:brightness-110 active:scale-95 shadow-lg border-b-4 border-red-900 active:border-b-0 active:translate-y-1"
                 aria-label={t('closeWelcomeGuide')}
                 >
                 {t('iUnderstand')}

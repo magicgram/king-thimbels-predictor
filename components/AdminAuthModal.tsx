@@ -43,7 +43,7 @@ const AdminAuthModal: React.FC<AdminAuthModalProps> = ({ onClose, onSuccess }) =
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4" aria-modal="true" role="dialog">
       <div className="w-full max-w-sm bg-[#0b2545] border-b-4 border-[#06162d] text-white rounded-2xl p-6 md:p-8 flex flex-col animate-fade-in shadow-[0_0_30px_rgba(0,0,0,0.5)]">
-        <h1 className="text-2xl font-russo text-center text-[#38bdf8] mb-2 uppercase">{t('adminAccess')}</h1>
+        <h1 className="text-2xl font-russo text-center text-[#fbbf24] mb-2 uppercase">{t('adminAccess')}</h1>
         <p className="text-center text-gray-300 mb-6 font-poppins text-sm">{t('enterPasswordToAccessTestPage')}</p>
         
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -53,7 +53,7 @@ const AdminAuthModal: React.FC<AdminAuthModalProps> = ({ onClose, onSuccess }) =
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
-              className="w-full px-4 py-3 bg-[#06162d] border border-[#1e293b] text-white placeholder-gray-500 font-poppins text-base rounded-full focus:outline-none focus:ring-2 focus:ring-[#38bdf8] transition"
+              className="w-full px-4 py-3 bg-[#06162d] border border-[#1e293b] text-white placeholder-gray-500 font-poppins text-base rounded-full focus:outline-none focus:ring-2 focus:ring-[#fbbf24] transition"
               autoFocus
             />
           </div>
@@ -75,7 +75,7 @@ const AdminAuthModal: React.FC<AdminAuthModalProps> = ({ onClose, onSuccess }) =
             <button
               type="submit"
               disabled={isLoading || !password}
-              className="py-3 bg-gradient-to-r from-[#4ade80] to-[#16a34a] text-[#064e3b] font-poppins font-bold text-lg uppercase rounded-full transition-all hover:brightness-110 active:scale-95 disabled:opacity-50 shadow-lg border-b-4 border-[#14532d] active:border-b-0 active:translate-y-1"
+              className="py-3 bg-gradient-to-b from-[#ef4444] via-[#dc2626] to-[#b91c1c] text-white font-poppins font-bold text-lg uppercase rounded-full transition-all hover:brightness-110 active:scale-95 disabled:opacity-50 shadow-lg border-b-4 border-red-900 active:border-b-0 active:translate-y-1"
             >
               {isLoading ? t('verifying') : t('submit')}
             </button>

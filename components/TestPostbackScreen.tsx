@@ -90,8 +90,8 @@ const TestPostbackScreen: React.FC<TestPostbackScreenProps> = ({ onBack }) => {
   if (showGuide) {
       return (
         <div className="w-full h-screen text-white flex flex-col p-4 relative">
-            {/* Gradient Background matching reference */}
-            <div className="absolute inset-0 bg-gradient-to-b from-[#38bdf8] to-[#0284c7] z-0"></div>
+            {/* Gradient Background matching reference - Yellow/Orange */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-[#fbbf24] via-[#f59e0b] to-[#b45309] z-0"></div>
             <div className="relative z-10 w-full h-full">
                 <PostbackGuide onBack={() => setShowGuide(false)} />
             </div>
@@ -101,10 +101,10 @@ const TestPostbackScreen: React.FC<TestPostbackScreenProps> = ({ onBack }) => {
 
   return (
     <div className="w-full h-screen text-white flex flex-col font-poppins p-4 relative">
-        {/* Gradient Background matching reference */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#38bdf8] to-[#0284c7] z-0"></div>
+        {/* Gradient Background matching reference - Yellow/Orange */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-[#fbbf24] via-[#f59e0b] to-[#b45309] z-0"></div>
         
-        <header className="flex items-center flex-shrink-0 text-[#001e3c] z-10 mb-4">
+        <header className="flex items-center flex-shrink-0 text-[#78350f] z-10 mb-4">
             <div className="w-10">
             <button onClick={onBack} className="p-2 -ml-2 rounded-full hover:bg-black/10" aria-label={t('goBack')}>
                 <ArrowLeftIcon className="w-6 h-6" />
@@ -123,7 +123,7 @@ const TestPostbackScreen: React.FC<TestPostbackScreenProps> = ({ onBack }) => {
             <div className="text-center mb-6">
                 <button
                     onClick={() => setShowGuide(true)}
-                    className="px-4 py-2 text-sm bg-[#38bdf8]/20 text-[#38bdf8] font-semibold rounded-lg hover:bg-[#38bdf8]/30 transition-colors border border-[#38bdf8]/30"
+                    className="px-4 py-2 text-sm bg-[#fbbf24]/20 text-[#fbbf24] font-semibold rounded-lg hover:bg-[#fbbf24]/30 transition-colors border border-[#fbbf24]/30"
                 >
                     {t('viewSetupGuide')}
                 </button>
@@ -140,7 +140,7 @@ const TestPostbackScreen: React.FC<TestPostbackScreenProps> = ({ onBack }) => {
                   value={userId}
                   onChange={(e) => setUserId(e.target.value)}
                   placeholder="testuser123"
-                  className="mt-2 w-full px-4 py-3 bg-[#06162d] border border-[#1e293b] text-white placeholder-gray-500 font-poppins text-base rounded-full focus:outline-none focus:ring-2 focus:ring-[#38bdf8] transition"
+                  className="mt-2 w-full px-4 py-3 bg-[#06162d] border border-[#1e293b] text-white placeholder-gray-500 font-poppins text-base rounded-full focus:outline-none focus:ring-2 focus:ring-[#fbbf24] transition"
                 />
               </div>
               
@@ -202,7 +202,7 @@ const TestPostbackScreen: React.FC<TestPostbackScreenProps> = ({ onBack }) => {
                   value={newPromoCode}
                   onChange={(e) => setNewPromoCode(e.target.value)}
                   placeholder="NEWPROMO25"
-                  className="mt-2 w-full px-4 py-3 bg-[#06162d] border border-[#1e293b] text-white placeholder-gray-500 font-poppins text-base rounded-full focus:outline-none focus:ring-2 focus:ring-[#38bdf8] transition"
+                  className="mt-2 w-full px-4 py-3 bg-[#06162d] border border-[#1e293b] text-white placeholder-gray-500 font-poppins text-base rounded-full focus:outline-none focus:ring-2 focus:ring-[#fbbf24] transition"
                 />
               </div>
               <div>
@@ -215,7 +215,7 @@ const TestPostbackScreen: React.FC<TestPostbackScreenProps> = ({ onBack }) => {
                   value={adminPassword}
                   onChange={(e) => setAdminPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="mt-2 w-full px-4 py-3 bg-[#06162d] border border-[#1e293b] text-white placeholder-gray-500 font-poppins text-base rounded-full focus:outline-none focus:ring-2 focus:ring-[#38bdf8] transition"
+                  className="mt-2 w-full px-4 py-3 bg-[#06162d] border border-[#1e293b] text-white placeholder-gray-500 font-poppins text-base rounded-full focus:outline-none focus:ring-2 focus:ring-[#fbbf24] transition"
                 />
               </div>
 
@@ -244,4 +244,4 @@ const TestPostbackScreen: React.FC<TestPostbackScreenProps> = ({ onBack }) => {
   );
 };
 
-export default React.memo(TestPostbackScreen);
+export default TestPostbackScreen;

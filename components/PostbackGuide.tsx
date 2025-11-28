@@ -36,7 +36,7 @@ const CopyableUrl: React.FC<{ url: string }> = ({ url }) => {
 
     return (
         <div className="mt-2 flex items-center justify-between bg-[#06162d] p-2 rounded-md border border-[#1e293b]">
-            <code className="font-mono text-xs md:text-sm text-sky-300 break-all">{url}</code>
+            <code className="font-mono text-xs md:text-sm text-amber-300 break-all">{url}</code>
             <button onClick={handleCopy} className="p-1.5 text-gray-300 hover:text-white transition-colors flex-shrink-0" aria-label={t('copy')}>
                 {copied ? <CheckIcon className="w-5 h-5 text-green-400" /> : <CopyIcon className="w-5 h-5" />}
             </button>
@@ -59,7 +59,7 @@ const PostbackUrlComponent: React.FC<{
         <div className="space-y-2 text-sm text-gray-400">
           {params.map(p => (
             <div key={p.key}>
-              <p><code className="text-xs bg-sky-500/20 text-sky-300 p-1 rounded">{p.key}</code>: {p.desc}</p>
+              <p><code className="text-xs bg-amber-500/20 text-amber-300 p-1 rounded">{p.key}</code>: {p.desc}</p>
             </div>
           ))}
         </div>
@@ -78,7 +78,7 @@ const PostbackGuide: React.FC<PostbackGuideProps> = ({ onBack }) => {
     
     return (
         <div className="w-full h-full flex flex-col text-white font-poppins">
-            <header className="flex items-center mb-4 flex-shrink-0 text-[#001e3c]">
+            <header className="flex items-center mb-4 flex-shrink-0 text-[#78350f]">
                 <div className="w-10">
                     <button onClick={onBack} className="p-2 rounded-full bg-black/10 hover:bg-black/20 transition-colors" aria-label={t('goBack')}>
                         <ArrowLeftIcon className="w-6 h-6" />
@@ -89,7 +89,7 @@ const PostbackGuide: React.FC<PostbackGuideProps> = ({ onBack }) => {
             </header>
             
             <div className="flex-grow overflow-y-auto px-1 space-y-6">
-                <p className="text-center text-[#001e3c] font-semibold text-sm" dangerouslySetInnerHTML={{ __html: t('postbackGuideDescription') }}/>
+                <p className="text-center text-[#78350f] font-semibold text-sm" dangerouslySetInnerHTML={{ __html: t('postbackGuideDescription') }}/>
                 
                 {domain && (
                     <div className="p-2 text-center bg-[#0b2545] border-b-4 border-[#06162d] rounded-lg text-xs text-yellow-300 shadow-lg">
@@ -98,7 +98,7 @@ const PostbackGuide: React.FC<PostbackGuideProps> = ({ onBack }) => {
                 )}
                 
                 <div className="p-4 bg-[#0b2545] border-b-4 border-[#06162d] rounded-lg shadow-lg">
-                    <h2 className="font-bold text-lg text-blue-300">Step 1: Find Your Network's Macros</h2>
+                    <h2 className="font-bold text-lg text-amber-300">Step 1: Find Your Network's Macros</h2>
                     <p className="text-sm text-gray-300 mt-2">
                         In your affiliate panel, find the list of available "macros" or "placeholders". These are special codes that your network replaces with real data. You need to find the macros for:
                     </p>

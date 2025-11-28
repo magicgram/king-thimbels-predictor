@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import type { User } from '../types';
 import { usePrediction } from '../services/authService';
@@ -42,7 +41,7 @@ const Diamond = () => (
   </svg>
 );
 
-// Limit Reached View
+// Limit Reached View - Updated Theme
 const LimitReachedView = React.memo(({ handleDepositRedirect }: { handleDepositRedirect: () => void; }) => {
   const { t } = useLanguage();
 
@@ -50,17 +49,17 @@ const LimitReachedView = React.memo(({ handleDepositRedirect }: { handleDepositR
      <div 
         className="w-full h-screen flex flex-col font-poppins relative overflow-hidden items-center justify-center p-4 bg-[#0b2545]"
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-[#38bdf8] to-[#0284c7] z-0"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-[#fbbf24] via-[#f59e0b] to-[#b45309] z-0"></div>
 
         <div className="w-full max-w-sm bg-[#0b2545] rounded-2xl p-8 border-b-4 border-[#06162d] text-center shadow-2xl z-10">
-            <h1 className="text-2xl font-russo uppercase text-[#38bdf8] mb-4 tracking-wide">
+            <h1 className="text-2xl font-russo uppercase text-[#fbbf24] mb-4 tracking-wide">
                 {t('reDepositMessageTitle')}
             </h1>
             <p className="text-gray-300 font-poppins text-sm leading-relaxed mb-8">{t('limitReachedText')}</p>
             
             <button 
                 onClick={handleDepositRedirect}
-                className="w-full py-4 bg-gradient-to-r from-[#4ade80] to-[#16a34a] text-[#064e3b] font-russo text-xl uppercase rounded-full transition-transform hover:scale-105 active:scale-95 shadow-lg border-b-4 border-[#14532d] active:border-b-0 active:translate-y-1"
+                className="w-full py-4 bg-gradient-to-b from-[#ef4444] via-[#dc2626] to-[#b91c1c] text-white font-russo text-xl uppercase rounded-full transition-transform hover:scale-105 active:scale-95 shadow-lg border-b-4 border-red-900 active:border-b-0 active:translate-y-1"
             >
                 {t('depositNow')}
             </button>
@@ -109,19 +108,9 @@ const ThimbleGame = React.memo((props: {
         const handleResize = () => {
             if (window.innerWidth >= 768) {
                 setSpacing(260); // Desktop spacing
-                // Desktop Calculation:
-                // Thimble Height: 480px (30rem). Half: 240px.
-                // Thimble lifts -100px. Visual Bottom Edge = 240 - 100 = 140px.
-                // Diamond Top desired = 140px + 2px (gap) = 142px.
-                // Diamond Center = 142px + 16px (half diamond height) = 158px.
                 setDiamondOffset(158); 
             } else {
                 setSpacing(125); // Mobile spacing
-                // Mobile Calculation:
-                // Thimble Height: 256px (h-64). Half: 128px.
-                // Thimble lifts -100px. Visual Bottom Edge = 128 - 100 = 28px.
-                // Diamond Top desired = 28px + 2px (gap) = 30px.
-                // Diamond Center = 30px + 16px (half diamond height) = 46px.
                 setDiamondOffset(46);
             }
         };

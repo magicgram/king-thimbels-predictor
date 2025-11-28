@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback } from 'react';
 import { verifyUser, VerificationResponse } from '../services/authService';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -30,7 +29,7 @@ const DepositMessage: React.FC<{
   const { t } = useLanguage();
   return (
     <div className="w-full max-w-sm mx-auto text-white text-center animate-fade-in-up">
-      <h2 className="text-2xl font-russo font-bold mb-4">{t('depositMessageTitle')}</h2>
+      <h2 className="text-2xl font-russo font-bold mb-4 text-[#fbbf24]">{t('depositMessageTitle')}</h2>
       <div className="mb-6 font-poppins space-y-3 text-gray-300 text-sm">
           <p>{t('depositMessageSync')}</p>
           <p>{t('depositMessageDeposit')}</p>
@@ -40,11 +39,11 @@ const DepositMessage: React.FC<{
         <button
           onClick={onRegister}
           disabled={isRegistering}
-          className="w-full py-3 bg-gradient-to-r from-[#4ade80] to-[#16a34a] text-[#064e3b] font-poppins font-bold text-lg uppercase rounded-full transition-all hover:brightness-110 active:scale-95 disabled:opacity-50 shadow-lg border-b-4 border-[#14532d] active:border-b-0 active:translate-y-1"
+          className="w-full py-3 bg-gradient-to-b from-[#ef4444] via-[#dc2626] to-[#b91c1c] text-white font-poppins font-bold text-lg uppercase rounded-full transition-all hover:brightness-110 active:scale-95 disabled:opacity-50 shadow-lg border-b-4 border-red-900 active:border-b-0 active:translate-y-1"
         >
           {isRegistering ? (
             <div className="flex justify-center items-center">
-              <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-[#064e3b]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
               </svg>
@@ -82,17 +81,17 @@ const ReDepositMessage: React.FC<{
   const { t } = useLanguage();
   return (
     <div className="w-full max-w-sm mx-auto text-white text-center animate-fade-in-up">
-      <h2 className="text-2xl font-russo font-bold mb-4">{t('reDepositMessageTitle')}</h2>
+      <h2 className="text-2xl font-russo font-bold mb-4 text-[#fbbf24]">{t('reDepositMessageTitle')}</h2>
       <p className="mb-6 font-poppins text-gray-300 text-sm">{t('reDepositMessageContinue')}</p>
       <div className="space-y-4">
         <button
           onClick={onRegister}
           disabled={isRegistering}
-          className="w-full py-3 bg-gradient-to-r from-[#4ade80] to-[#16a34a] text-[#064e3b] font-poppins font-bold text-lg uppercase rounded-full transition-all hover:brightness-110 active:scale-95 disabled:opacity-50 shadow-lg border-b-4 border-[#14532d] active:border-b-0 active:translate-y-1"
+          className="w-full py-3 bg-gradient-to-b from-[#ef4444] via-[#dc2626] to-[#b91c1c] text-white font-poppins font-bold text-lg uppercase rounded-full transition-all hover:brightness-110 active:scale-95 disabled:opacity-50 shadow-lg border-b-4 border-red-900 active:border-b-0 active:translate-y-1"
         >
           {isRegistering ? (
             <div className="flex justify-center items-center">
-              <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-[#064e3b]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
               </svg>
@@ -212,14 +211,14 @@ const LoginScreen: React.FC<LoginScreenProps> = ({
     <div 
         className="w-full min-h-screen flex flex-col items-center justify-between p-4 relative overflow-hidden font-poppins" 
     >
-      {/* Gradient Background matching Predictor */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#38bdf8] to-[#0284c7] z-0"></div>
+      {/* Gradient Background matching Predictor - Yellow/Orange */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-[#fbbf24] via-[#f59e0b] to-[#b45309] z-0"></div>
 
       <div className="absolute top-6 right-4 flex items-center space-x-2 z-30">
-        <button onClick={onOpenGuide} className="p-2 rounded-full bg-black/10 text-[#001e3c] backdrop-blur-sm transition-colors hover:bg-black/20 active:scale-90" aria-label="Open Guide">
+        <button onClick={onOpenGuide} className="p-2 rounded-full bg-black/10 text-[#78350f] backdrop-blur-sm transition-colors hover:bg-black/20 active:scale-90" aria-label="Open Guide">
             <GuideIcon className="w-7 h-7" />
         </button>
-        <button onClick={onOpenSidebar} className="p-2 rounded-full bg-black/10 text-[#001e3c] backdrop-blur-sm transition-colors hover:bg-black/20 active:scale-90" aria-label="Open Menu">
+        <button onClick={onOpenSidebar} className="p-2 rounded-full bg-black/10 text-[#78350f] backdrop-blur-sm transition-colors hover:bg-black/20 active:scale-90" aria-label="Open Menu">
             <MenuIcon className="w-7 h-7" />
         </button>
       </div>
@@ -258,13 +257,13 @@ const LoginScreen: React.FC<LoginScreenProps> = ({
               />
             </div>
             
-            <h1 className="text-4xl font-russo uppercase text-[#001e3c] tracking-wide mx-auto max-w-[260px] leading-none drop-shadow-sm opacity-90 mb-2">{t('unlockPredictions')}</h1>
-            <p className="text-sm font-poppins font-medium text-[#001e3c]/70 mb-8 uppercase tracking-wide">{t('enterPlayerIdToSync')}</p>
+            <h1 className="text-4xl font-russo uppercase text-[#78350f] tracking-wide mx-auto max-w-[260px] leading-none drop-shadow-sm opacity-90 mb-2">{t('unlockPredictions')}</h1>
+            <p className="text-sm font-poppins font-medium text-[#78350f]/70 mb-8 uppercase tracking-wide">{t('enterPlayerIdToSync')}</p>
             
             <div className="w-full space-y-5">
                 <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
-                        <UserIcon className="h-5 w-5 text-[#38bdf8]" />
+                        <UserIcon className="h-5 w-5 text-[#fbbf24]" />
                     </div>
                     <input
                         id="playerId"
@@ -272,18 +271,18 @@ const LoginScreen: React.FC<LoginScreenProps> = ({
                         value={playerId}
                         onChange={(e) => setPlayerId(e.target.value)}
                         placeholder={t('playerIdLabel')}
-                        className="w-full pl-12 pr-5 py-3 bg-[#0b2545] border border-[#1e293b] text-white placeholder-gray-400 font-poppins text-base rounded-full focus:outline-none focus:ring-2 focus:ring-[#38bdf8] transition shadow-inner"
+                        className="w-full pl-12 pr-5 py-3 bg-[#0b2545] border-2 border-[#b45309] text-white placeholder-gray-400 font-poppins text-base rounded-full focus:outline-none focus:ring-2 focus:ring-[#fbbf24] transition shadow-inner"
                     />
                 </div>
 
                 <button
                     onClick={handleContinue}
                     disabled={isLoading || !playerId}
-                    className="w-full py-3 bg-gradient-to-r from-[#4ade80] to-[#16a34a] text-[#064e3b] font-poppins font-bold text-lg uppercase rounded-full transition-all hover:brightness-110 active:scale-95 disabled:opacity-50 shadow-lg border-b-4 border-[#14532d] active:border-b-0 active:translate-y-1"
+                    className="w-full py-3 bg-gradient-to-b from-[#ef4444] via-[#dc2626] to-[#b91c1c] text-white font-poppins font-bold text-lg uppercase rounded-full transition-all hover:brightness-110 active:scale-95 disabled:opacity-50 shadow-lg border-b-4 border-red-900 active:border-b-0 active:translate-y-1"
                 >
                     {isLoading ? (
                         <div className="flex justify-center items-center h-[28px]">
-                            <svg className="animate-spin h-5 w-5 text-[#064e3b]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                             </svg>
@@ -294,7 +293,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({
                 </button>
             </div>
 
-            <p className="text-center text-xs text-[#001e3c]/60 font-bold font-poppins pt-8 uppercase">{t('dontHaveAccount')}</p>
+            <p className="text-center text-xs text-[#78350f]/60 font-bold font-poppins pt-8 uppercase">{t('dontHaveAccount')}</p>
             
             <div className="w-full mt-2">
               <button
@@ -324,7 +323,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({
         )}
       </main>
 
-      <p className="text-[#001e3c]/50 text-sm font-poppins z-20 pb-2 font-medium">v15.9.0</p>
+      <p className="text-[#451a03]/50 text-sm font-poppins z-20 pb-2 font-medium">v15.9.0</p>
     </div>
   );
 };
