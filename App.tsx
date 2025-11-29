@@ -10,8 +10,17 @@ const App: React.FC = () => {
   const [user, setUser] = useState<User | null>(() => {
     if (typeof window !== 'undefined') {
       try {
-        const savedUser = localStorage.getItem('session_user');
-        return savedUser ? JSON.parse(savedUser) : null;
+        const savedUserStr = localStorage.getItem('session_user');
+        if (savedUserStr) {
+            const savedUser = JSON.parse(savedUserStr);
+            // If prediction limit is reached (<= 0), do not restore session.
+            // This forces the user to the login screen on refresh.
+            if (savedUser.predictionsLeft <= 0) {
+                localStorage.removeItem('session_user');
+                return null;
+            }
+            return savedUser;
+        }
       } catch (error) {
         console.error("Failed to restore session:", error);
         return null;
