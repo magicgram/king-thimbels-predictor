@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import type { User } from '../types';
 import { usePrediction } from '../services/authService';
@@ -82,6 +83,7 @@ const ThimbleGame = React.memo((props: {
     const [spacing, setSpacing] = useState(125); 
     const [diamondOffset, setDiamondOffset] = useState(46); // Default mobile offset
     const shuffleIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+    const { t } = useLanguage();
 
     // Time State
     const [time, setTime] = useState(new Date());
@@ -156,9 +158,9 @@ const ThimbleGame = React.memo((props: {
 
     const getResultText = () => {
         if (props.gameState !== 'revealed' || props.resultPosition === null) return null;
-        if (props.resultPosition === 0) return "LEFT";
-        if (props.resultPosition === 1) return "CENTER";
-        if (props.resultPosition === 2) return "RIGHT";
+        if (props.resultPosition === 0) return t('gameResultLeft');
+        if (props.resultPosition === 1) return t('gameResultCenter');
+        if (props.resultPosition === 2) return t('gameResultRight');
         return "";
     };
 
@@ -182,13 +184,13 @@ const ThimbleGame = React.memo((props: {
 
             <main className="flex-grow flex flex-col items-center w-full max-w-xl mx-auto px-4 z-10 relative pt-4 md:pt-8 pb-4">
                 
-                {/* Result Display Container */}
+                {/* Result Display Container - Auto width for translation */}
                 <div 
-                    className={`mb-1 md:mb-8 w-52 h-16 rounded-3xl bg-gradient-to-b from-[#fcd34d] to-[#fbbf24] shadow-[inset_0_2px_4px_rgba(255,255,255,0.6),0_8px_16px_rgba(180,83,9,0.3)] border-4 border-[#fef3c7]/50 flex items-center justify-center relative transition-opacity duration-500 ${props.gameState === 'revealed' ? 'opacity-100' : 'opacity-0'}`}
+                    className={`mb-1 md:mb-8 min-w-[13rem] w-auto px-6 h-16 rounded-3xl bg-gradient-to-b from-[#fcd34d] to-[#fbbf24] shadow-[inset_0_2px_4px_rgba(255,255,255,0.6),0_8px_16px_rgba(180,83,9,0.3)] border-4 border-[#fef3c7]/50 flex items-center justify-center relative transition-opacity duration-500 ${props.gameState === 'revealed' ? 'opacity-100' : 'opacity-0'}`}
                 >
                     <div className="absolute inset-0 rounded-3xl bg-white/10 pointer-events-none"></div>
                     {props.gameState === 'revealed' && (
-                        <h1 className="font-russo text-2xl md:text-3xl text-[#7f1d1d] tracking-widest drop-shadow-[0_2px_0_rgba(255,255,255,0.4)] animate-fade-in-up uppercase">
+                        <h1 className="font-russo text-2xl md:text-3xl text-[#7f1d1d] tracking-widest drop-shadow-[0_2px_0_rgba(255,255,255,0.4)] animate-fade-in-up uppercase whitespace-nowrap">
                             {getResultText()}
                         </h1>
                     )}
@@ -247,12 +249,12 @@ const ThimbleGame = React.memo((props: {
                      </div>
                 </div>
 
-                {/* Start Button - Glossy Red */}
+                {/* Start Button - Glossy Red - Auto width for translation */}
                 <button
                     onClick={props.onStart}
                     disabled={props.isLoading || props.gameState === 'shuffling'}
                     className={`
-                        relative w-52 h-16 rounded-full font-russo text-2xl tracking-wider text-white shadow-[0_6px_0_#7f1d1d,0_10px_10px_rgba(0,0,0,0.3)] transition-all overflow-hidden border-2 border-red-400/50 -mt-32 md:mb-2 z-40
+                        relative min-w-[13rem] w-auto px-8 h-16 rounded-full font-russo text-2xl tracking-wider text-white shadow-[0_6px_0_#7f1d1d,0_10px_10px_rgba(0,0,0,0.3)] transition-all overflow-hidden border-2 border-red-400/50 -mt-32 md:mb-2 z-40 whitespace-nowrap
                         ${props.gameState === 'shuffling' || props.isLoading
                             ? 'bg-gray-500 cursor-not-allowed opacity-80 shadow-none translate-y-1' 
                             : 'bg-gradient-to-b from-[#ef4444] via-[#dc2626] to-[#b91c1c] hover:brightness-110 active:shadow-none active:translate-y-[6px]'}
@@ -260,7 +262,7 @@ const ThimbleGame = React.memo((props: {
                 >
                     <div className="absolute inset-0 bg-gradient-to-b from-white/20 to-transparent pointer-events-none"></div>
                     <span className="relative drop-shadow-md">
-                        {props.gameState === 'shuffling' ? '...' : 'START'}
+                        {props.gameState === 'shuffling' ? '...' : t('startGame')}
                     </span>
                 </button>
 
